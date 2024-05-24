@@ -5,7 +5,13 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceApp", "InvoiceApp\InvoiceApp.csproj", "{32646276-67A5-4848-8547-6377F1B19205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceAppTests", "InvoiceAppTests\InvoiceAppTests.csproj", "{94FEBCC2-4417-4503-B504-32C7C4D73DE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceAppTests", "InvoiceAppTests\InvoiceAppTests.csproj", "{94FEBCC2-4417-4503-B504-32C7C4D73DE3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{10721B3B-C2AC-46ED-A0E9-2195DD725804}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Patterns.txt = Patterns.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

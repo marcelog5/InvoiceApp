@@ -1,0 +1,4 @@
+DTO - Data Transfer Object
+
+It's a object that carries data between processes. The data is usually simple data like strings, ints, etc. It's used to pass data around layers of the project.
+

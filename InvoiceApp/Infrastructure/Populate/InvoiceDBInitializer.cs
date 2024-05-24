@@ -26,7 +26,7 @@ namespace InvoiceApp.Infrastructure.Populate
             Payment payment = new Payment
             {
                 Amount = 6000,
-                Date = DateTime.Parse("2022-01-01T10:00:00"),
+                Date = DateTime.Parse("2022-01-05T10:00:00"),
                 Contract = contract
             };
 
