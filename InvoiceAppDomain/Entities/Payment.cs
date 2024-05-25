@@ -1,4 +1,4 @@
-﻿namespace InvoiceApp.Domain.Entities
+﻿namespace InvoiceAppDomain.Entities
 {
     public class Payment : BasicEntity
     {

@@ -1,5 +1,7 @@
-using InvoiceApp.Infrastructure;
-using InvoiceApp.Infrastructure.Populate;
+using InvoiceAppDomain.Data.Repository;
+using InvoiceAppInfrastructure;
+using InvoiceAppInfrastructure.Populate;
+using InvoiceAppInfrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<InvoiceDBContext>(
     options => options.UseSqlServer("Server=localhost;Database=InvoiceDataBase;User Id=sa;Password=gH9#kL$4p@3qW!;TrustServerCertificate=true;")
 );
+
+// Repository
+builder.Services.AddTransient<IContractRepository, ContractRepository>();
 
 var app = builder.Build();
 

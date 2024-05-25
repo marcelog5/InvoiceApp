@@ -1,7 +1,7 @@
-﻿using InvoiceApp.Domain.Entities;
+﻿using InvoiceAppDomain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvoiceApp.Infrastructure
+namespace InvoiceAppInfrastructure
 {
     public class InvoiceDBContext : DbContext
     {

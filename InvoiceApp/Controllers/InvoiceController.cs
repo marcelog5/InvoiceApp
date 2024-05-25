@@ -1,4 +1,7 @@
-﻿using InvoiceApp.Infrastructure;
+﻿using InvoiceApp.Service.InvoiceServices;
+using InvoiceAppDomain.Data.DTOs;
+using InvoiceAppDomain.Data.Repository;
+using InvoiceAppDomain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,18 +12,28 @@ namespace InvoiceApp.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        public InvoiceDBContext _context;
+        private readonly IContractRepository _contractRepository;
 
-        public InvoiceController(InvoiceDBContext context)
+        public InvoiceController
+        (
+            IContractRepository contractRepository
+        )
         {
-            _context = context;
+            _contractRepository = contractRepository;
         }
 
         // GET: api/<InvoiceController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<GenerateInvoicesOutputDTO>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var generateInvoices = new GenerateInvoices(_contractRepository);
+            var response = await generateInvoices.Execute(new GenerateInvoicesInputDTO
+            {
+                Month = 1,
+                Year = 2022,
+                Type = EnInvoiceType.Cash
+            });
+            return response;
         }
 
         // GET api/<InvoiceController>/5

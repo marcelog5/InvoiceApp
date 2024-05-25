@@ -1,36 +1,35 @@
-﻿using InvoiceApp.Domain.DTOs;
-using InvoiceApp.Domain.Entities;
-using InvoiceApp.Domain.Enums;
-using InvoiceApp.Infrastructure;
+﻿using InvoiceAppDomain.Data.DTOs;
+using InvoiceAppDomain.Data.Repository;
+using InvoiceAppDomain.Entities;
+using InvoiceAppDomain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceApp.Service.InvoiceServices
 {
     public class GenerateInvoices
     {
-        private readonly InvoiceDBContext _context;
+        private readonly IContractRepository _contractRepository;
 
         public GenerateInvoices
         (
-            InvoiceDBContext context
+            IContractRepository contractRepository
         )
         {
-            _context = context;
+            _contractRepository = contractRepository;
         }
 
-        public List<GenerateInvoicesOutputDTO> Execute(GenerateInvoicesInputDTO input)
+        public async Task<List<GenerateInvoicesOutputDTO>> Execute(GenerateInvoicesInputDTO input)
         {
-            DbSet<Contract> contractQuery = _context.Set<Contract>();
-            DbSet<Payment> paymentQuery = _context.Set<Payment>();
             List<GenerateInvoicesOutputDTO> output = new List<GenerateInvoicesOutputDTO>();
 
-            List<Contract> contracts = contractQuery.ToList();
+            Func<IQueryable<Contract>, IQueryable<Contract>> contractFilter = f => f.Where(x => x.IsActive).Include(x => x.Payments);
+            List<Contract> contracts = (await _contractRepository.GetAsync(contractFilter)).ToList();
             
             foreach (Contract contract in contracts)
             {
                 if (input.Type == EnInvoiceType.Cash)
                 {
-                    List<Payment> payments = paymentQuery.Where(x => x.ContractId == contract.Id).ToList();
+                    List<Payment> payments = contract.Payments.Where(x => x.ContractId == contract.Id).ToList();
 
                     foreach (Payment payment in payments)
                     {

@@ -1,6 +1,6 @@
-﻿using InvoiceApp.Domain.Entities;
+﻿using InvoiceAppDomain.Entities;
 
-namespace InvoiceApp.Infrastructure.Populate
+namespace InvoiceAppInfrastructure.Populate
 {
     public static class InvoiceDBInitializer
     {

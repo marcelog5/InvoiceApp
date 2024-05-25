@@ -1,4 +1,4 @@
-﻿namespace InvoiceApp.Domain.DTOs
+﻿namespace InvoiceAppDomain.Data.DTOs
 {
     public class GenerateInvoicesOutputDTO
     {

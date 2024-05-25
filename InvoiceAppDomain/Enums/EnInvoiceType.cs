@@ -1,4 +1,4 @@
-﻿namespace InvoiceApp.Domain.Enums
+﻿namespace InvoiceAppDomain.Enums
 {
     public enum EnInvoiceType
     {

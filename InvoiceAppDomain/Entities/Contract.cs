@@ -1,4 +1,4 @@
-﻿namespace InvoiceApp.Domain.Entities
+﻿namespace InvoiceAppDomain.Entities
 {
     public class Contract : BasicEntity
     {
@@ -7,5 +7,7 @@
         public double Amount { get; set; }
         public int Periods { get; set; }
         public DateTime Date { get; set; }
+
+        public virtual List<Payment> Payments { get; set; }
     }
 }

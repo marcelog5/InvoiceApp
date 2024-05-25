@@ -1,6 +1,6 @@
-﻿using InvoiceApp.Domain.Enums;
+﻿using InvoiceAppDomain.Enums;
 
-namespace InvoiceApp.Domain.DTOs
+namespace InvoiceAppDomain.Data.DTOs
 {
     public class GenerateInvoicesInputDTO
     {
