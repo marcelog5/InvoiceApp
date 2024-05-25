@@ -2,7 +2,7 @@
 {
     public enum EnInvoiceType
     {
-        Accrucial = 1,
+        Accrual = 1,
         Cash = 2
     }
 }

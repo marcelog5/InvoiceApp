@@ -2,7 +2,7 @@
 {
     public class GenerateInvoicesOutputDTO
     {
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public double Amount { get; set; }
     }
 }

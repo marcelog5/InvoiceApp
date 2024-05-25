@@ -1,5 +1,6 @@
 ﻿using InvoiceApp.Domain.DTOs;
 using InvoiceApp.Domain.Entities;
+using InvoiceApp.Domain.Enums;
 using InvoiceApp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,19 +28,44 @@ namespace InvoiceApp.Service.InvoiceServices
             
             foreach (Contract contract in contracts)
             {
-                List<Payment> payments = paymentQuery.Where(x => x.ContractId == contract.Id).ToList();
-
-                foreach (Payment payment in payments)
+                if (input.Type == EnInvoiceType.Cash)
                 {
-                    if (payment.Date.Month != input.Month || payment.Date.Year != input.Year)
-                    {
-                        continue;
-                    }
+                    List<Payment> payments = paymentQuery.Where(x => x.ContractId == contract.Id).ToList();
 
-                    output.Add(new GenerateInvoicesOutputDTO{
-                        Date = payment.Date,
-                        Amount = payment.Amount
-                    });
+                    foreach (Payment payment in payments)
+                    {
+                        if (payment.Date.Month != input.Month || payment.Date.Year != input.Year)
+                        {
+                            continue;
+                        }
+
+                        output.Add(new GenerateInvoicesOutputDTO{
+                            Date = payment.Date.ToString("yyyy-MM-dd"),
+                            Amount = payment.Amount
+                        });
+                    }
+                }
+
+                if (input.Type == EnInvoiceType.Accrual)
+                {
+                    int period = 0;
+                    while (period <= contract.Periods)
+                    {
+                        DateTime date = contract.Date.AddMonths(period++);
+                        
+                        if (date.Month != input.Month || date.Year != input.Year)
+                        {
+                            continue;
+                        }
+
+                        double amount = contract.Amount / contract.Periods;
+
+                        output.Add(new GenerateInvoicesOutputDTO
+                        {
+                            Date = date.ToString("yyyy-MM-dd"),
+                            Amount = amount
+                        });
+                    }
                 }
             }
 

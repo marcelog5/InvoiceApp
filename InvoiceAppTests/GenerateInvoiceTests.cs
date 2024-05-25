@@ -33,7 +33,7 @@ namespace InvoiceAppTests
         }
 
         [Fact]
-        public void ShouldGenerateInvoice()
+        public void ShouldGenerateInvoiceCash()
         {
             // Arrange
             var contracts = new List<Contract>
@@ -61,7 +61,8 @@ namespace InvoiceAppTests
             var input = new GenerateInvoicesInputDTO
             {
                 Month = 1,
-                Year = 2022
+                Year = 2022,
+                Type = EnInvoiceType.Cash
             };
 
             // Act
@@ -69,7 +70,48 @@ namespace InvoiceAppTests
 
             // Assert
             Assert.Equal(6000, result[0].Amount);
-            Assert.Equal("2022-01-05", result[0].Date.ToString("yyyy-MM-dd"));
+            Assert.Equal("2022-01-05", result[0].Date);
+        }
+
+        [Fact]
+        public void ShouldGenerateInvoiceAccrual()
+        {
+            // Arrange
+            var contracts = new List<Contract>
+            {
+                new Contract
+                {
+                    Description = "Prestação de serviços escolares",
+                    Amount = 6000,
+                    Periods = 12,
+                    Date = DateTime.Parse("2022-01-01T10:00:00"),
+                },
+            }.AsQueryable();
+
+            var payments = new List<Payment>
+            {
+                new Payment
+                {
+                    Amount = 6000,
+                    Date = DateTime.Parse("2022-01-05T10:00:00"),
+                },
+            }.AsQueryable();
+
+            var mockContext = MockDbContext(contracts, payments);
+            var service = new GenerateInvoices(mockContext.Object);
+            var input = new GenerateInvoicesInputDTO
+            {
+                Month = 1,
+                Year = 2022,
+                Type = EnInvoiceType.Accrual
+            };
+
+            // Act
+            var result = service.Execute(input);
+
+            // Assert
+            Assert.Equal(500, result[0].Amount);
+            Assert.Equal("2022-01-01", result[0].Date);
         }
     }
 }
