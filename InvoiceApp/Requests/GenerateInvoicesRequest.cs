@@ -1,10 +1,12 @@
-﻿using InvoiceAppDomain.Enums;
+﻿using InvoiceApp.Responses;
+using InvoiceAppDomain.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceApp.Requests
 {
-    public class GenerateInvoicesRequest
+    public class GenerateInvoicesRequest : IRequest<GenerateInvoicesResponse>
     {
         [FromBody]
         [Required]

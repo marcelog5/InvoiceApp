@@ -11,12 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Patterns.txt = Patterns.txt
+		ReadMe.txt = ReadMe.txt
 		Solid.txt = Solid.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceAppInfrastructure", "InvoiceAppInfrastructure\InvoiceAppInfrastructure.csproj", "{40BEBAB1-B90B-4EA3-9CCA-0D41C1AF3D60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceAppInfrastructure", "InvoiceAppInfrastructure\InvoiceAppInfrastructure.csproj", "{40BEBAB1-B90B-4EA3-9CCA-0D41C1AF3D60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceAppDomain", "InvoiceAppDomain\InvoiceAppDomain.csproj", "{8315FC1D-13EC-4890-A90D-4215C07B865D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceAppDomain", "InvoiceAppDomain\InvoiceAppDomain.csproj", "{8315FC1D-13EC-4890-A90D-4215C07B865D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

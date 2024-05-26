@@ -1,7 +1,6 @@
-﻿using InvoiceApp.Handles;
-using InvoiceApp.Requests;
+﻿using InvoiceApp.Requests;
 using InvoiceApp.Responses;
-using InvoiceAppDomain.Data.Repository;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,24 +11,21 @@ namespace InvoiceApp.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
-        private readonly IContractRepository _contractRepository;
+        private IMediator _mediator;
 
         public InvoiceController
         (
-            IContractRepository contractRepository
+            IMediator mediator
         )
         {
-            _contractRepository = contractRepository;
+            _mediator = mediator;
         }
 
         // POST api/<InvoiceController>
         [HttpPost("GenerateInvoices")]
         public async Task<GenerateInvoicesResponse> Post([FromBody] GenerateInvoicesRequest request)
         {
-            GenerateInvoicesHandle handler = new GenerateInvoicesHandle(_contractRepository);
-            GenerateInvoicesResponse response = await handler.Handle(request);
-
-            return response;
+            return await _mediator.Send(request);
         }
     }
 }

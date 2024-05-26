@@ -1,6 +1,4 @@
 ﻿using InvoiceAppDomain.Entities;
-using InvoiceAppDomain.Enums;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace InvoiceAppDomain.Service.Invoice
 {

@@ -1,3 +1,4 @@
+using InvoiceApp.Requests;
 using InvoiceAppDomain.Data.Repository;
 using InvoiceAppInfrastructure;
 using InvoiceAppInfrastructure.Populate;
@@ -12,6 +13,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// MediatR
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(GenerateInvoicesRequest).Assembly);
+});
 
 builder.Services.AddDbContext<InvoiceDBContext>(
     options => options.UseSqlServer("Server=localhost;Database=InvoiceDataBase;User Id=sa;Password=gH9#kL$4p@3qW!;TrustServerCertificate=true;")

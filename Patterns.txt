@@ -23,4 +23,12 @@ Can create a object with a string
 Format and adapt a group of data to be presented to the client.
 
 
+- Decorator (TODO in Generate Invoice) (do like an audit)
+
+Add behavior to a object without changing the object itself. (OCP)
+
+
+- Controller
+
+Conects different layers of the project, passing data and returning responses.
 
