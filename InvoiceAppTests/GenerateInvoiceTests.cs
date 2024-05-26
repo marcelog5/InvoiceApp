@@ -2,7 +2,7 @@ using InvoiceAppDomain.Data.DTOs;
 using InvoiceAppDomain.Data.Repository;
 using InvoiceAppDomain.Entities;
 using InvoiceAppDomain.Enums;
-using InvoiceAppDomain.Service.InvoiceServices;
+using InvoiceAppDomain.Service.Invoice;
 using Moq;
 
 namespace InvoiceAppTests
@@ -15,18 +15,18 @@ namespace InvoiceAppTests
         {
             // Arrange
             Guid contractId = Guid.NewGuid();
-            var contractResponse = new List<Contract>
+            var contractResponse = new List<ContractEntity>
             {
-                new Contract
+                new ContractEntity
                 {
                     Id = contractId,
                     Description = "Prestação de serviços escolares",
                     Amount = 6000,
                     Periods = 12,
                     Date = DateTime.Parse("2022-01-01T10:00:00"),
-                    Payments = new List<Payment>
+                    Payments = new List<PaymentEntity>
                     {
-                        new Payment
+                        new PaymentEntity
                         {
                             ContractId = contractId,
                             Amount = 6000,
@@ -38,7 +38,7 @@ namespace InvoiceAppTests
 
             var contractRepoMock = new Mock<IContractRepository>();
             contractRepoMock
-                .Setup(repo => repo.GetAsync(It.IsAny<Func<IQueryable<Contract>, IQueryable<Contract>>>(), new CancellationToken()))
+                .Setup(repo => repo.GetAsync(It.IsAny<Func<IQueryable<ContractEntity>, IQueryable<ContractEntity>>>(), new CancellationToken()))
                 .ReturnsAsync(contractResponse);
 
             var service = new GenerateInvoices(contractRepository: contractRepoMock.Object);
@@ -58,22 +58,22 @@ namespace InvoiceAppTests
         }
 
         [Fact]
-        public async Task MustGenerateInvoiceAccrual()
+        public async Task MustGenerateInvoiceAccrualByCSV()
         {
             // Arrange
             Guid contractId = Guid.NewGuid();
-            var contractResponse = new List<Contract>
+            var contractResponse = new List<ContractEntity>
             {
-                new Contract
+                new ContractEntity
                 {
                     Id = contractId,
                     Description = "Prestação de serviços escolares",
                     Amount = 6000,
                     Periods = 12,
                     Date = DateTime.Parse("2022-01-01T10:00:00"),
-                    Payments = new List<Payment>
+                    Payments = new List<PaymentEntity>
                     {
-                        new Payment
+                        new PaymentEntity
                         {
                             ContractId = contractId,
                             Amount = 6000,
@@ -85,7 +85,53 @@ namespace InvoiceAppTests
 
             var contractRepoMock = new Mock<IContractRepository>();
             contractRepoMock
-                .Setup(repo => repo.GetAsync(It.IsAny<Func<IQueryable<Contract>, IQueryable<Contract>>>(), new CancellationToken()))
+                .Setup(repo => repo.GetAsync(It.IsAny<Func<IQueryable<ContractEntity>, IQueryable<ContractEntity>>>(), new CancellationToken()))
+                .ReturnsAsync(contractResponse);
+
+            var service = new GenerateInvoices(contractRepository: contractRepoMock.Object);
+            var input = new GenerateInvoicesInputDTO
+            {
+                Month = 1,
+                Year = 2022,
+                Type = EnInvoiceType.Accrual
+            };
+
+            // Act
+            var result = await service.ExecuteCSV(input);
+
+            // Assert
+            Assert.Equal("2022-01-01;500", result);
+        }
+
+        [Fact]
+        public async Task MustGenerateInvoiceAccrual()
+        {
+            // Arrange
+            Guid contractId = Guid.NewGuid();
+            var contractResponse = new List<ContractEntity>
+            {
+                new ContractEntity
+                {
+                    Id = contractId,
+                    Description = "Prestação de serviços escolares",
+                    Amount = 6000,
+                    Periods = 12,
+                    Date = DateTime.Parse("2022-01-01T10:00:00"),
+                    Payments = new List<PaymentEntity>
+                    {
+                        new PaymentEntity
+                        {
+                            ContractId = contractId,
+                            Amount = 6000,
+                            Date = DateTime.Parse("2022-01-05T10:00:00"),
+                        },
+                    },
+                },
+            };
+
+            var contractRepoMock = new Mock<IContractRepository>();
+            contractRepoMock
+                .Setup(repo => repo.GetAsync(It.IsAny<Func<IQueryable<ContractEntity>, IQueryable<ContractEntity>>>(), new CancellationToken()))
                 .ReturnsAsync(contractResponse);
 
             var service = new GenerateInvoices(contractRepository: contractRepoMock.Object);

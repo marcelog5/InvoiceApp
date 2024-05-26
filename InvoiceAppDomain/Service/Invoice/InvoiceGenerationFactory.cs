@@ -1,6 +1,6 @@
 ﻿using InvoiceAppDomain.Enums;
 
-namespace InvoiceAppDomain.Service.InvoiceServices
+namespace InvoiceAppDomain.Service.Invoice
 {
     public class InvoiceGenerationFactory
     {

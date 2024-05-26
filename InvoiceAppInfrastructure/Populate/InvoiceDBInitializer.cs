@@ -15,7 +15,7 @@ namespace InvoiceAppInfrastructure.Populate
             }
 
             // Seed the database with initial data
-            Contract contract = new Contract
+            ContractEntity contract = new ContractEntity
             {
                 Description = "Prestação de serviços escolares",
                 Amount = 6000,
@@ -23,7 +23,7 @@ namespace InvoiceAppInfrastructure.Populate
                 Date = DateTime.Parse("2022-01-01T10:00:00"),
             };
 
-            Payment payment = new Payment
+            PaymentEntity payment = new PaymentEntity
             {
                 Amount = 6000,
                 Date = DateTime.Parse("2022-01-05T10:00:00"),

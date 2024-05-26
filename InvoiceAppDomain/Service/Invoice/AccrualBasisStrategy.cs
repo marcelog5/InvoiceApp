@@ -2,13 +2,13 @@
 using InvoiceAppDomain.Enums;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace InvoiceAppDomain.Service.InvoiceServices
+namespace InvoiceAppDomain.Service.Invoice
 {
     public class AccrualBasisStrategy : IInvoiceGenerationStrategy
     {
-        public List<Invoice> Generate(Contract contract, int month, int year)
+        public List<InvoiceEntity> Generate(ContractEntity contract, int month, int year)
         {
-            List<Invoice> invoices = new List<Invoice>();
+            List<InvoiceEntity> invoices = new List<InvoiceEntity>();
 
             int period = 0;
             while (period <= contract.Periods)
@@ -21,7 +21,7 @@ namespace InvoiceAppDomain.Service.InvoiceServices
                 }
                 double amount = contract.Amount / contract.Periods;
 
-                invoices.Add(new Invoice
+                invoices.Add(new InvoiceEntity
                 {
                     Date = date,
                     Amount = amount

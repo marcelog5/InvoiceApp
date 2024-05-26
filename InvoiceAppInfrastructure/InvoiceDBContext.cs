@@ -14,8 +14,8 @@ namespace InvoiceAppInfrastructure
             base.OnModelCreating(modelBuilder);
         }
 
-        public virtual DbSet<Invoice> Invoices { get; set; }
-        public virtual DbSet<Contract> Contracts { get; set; }
-        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<InvoiceEntity> Invoices { get; set; }
+        public virtual DbSet<ContractEntity> Contracts { get; set; }
+        public virtual DbSet<PaymentEntity> Payments { get; set; }
     }
 }

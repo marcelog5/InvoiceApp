@@ -1,22 +1,22 @@
 ﻿using InvoiceAppDomain.Entities;
 
-namespace InvoiceAppDomain.Service.InvoiceServices
+namespace InvoiceAppDomain.Service.Invoice
 {
     public class CashBasisStrategy : IInvoiceGenerationStrategy
     {
-        public List<Invoice> Generate(Contract contract, int month, int year)
+        public List<InvoiceEntity> Generate(ContractEntity contract, int month, int year)
         {
-            List<Invoice> invoices = new List<Invoice>();
-            List<Payment> payments = contract.Payments.Where(x => x.ContractId == contract.Id).ToList();
+            List<InvoiceEntity> invoices = new List<InvoiceEntity>();
+            List<PaymentEntity> payments = contract.Payments.Where(x => x.ContractId == contract.Id).ToList();
 
-            foreach (Payment payment in payments)
+            foreach (PaymentEntity payment in payments)
             {
                 if (payment.Date.Month != month || payment.Date.Year != year)
                 {
                     continue;
                 }
 
-                invoices.Add(new Invoice
+                invoices.Add(new InvoiceEntity
                 {
                     Date = payment.Date,
                     Amount = payment.Amount

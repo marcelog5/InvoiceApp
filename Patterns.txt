@@ -1,16 +1,26 @@
-DTO - Data Transfer Object
+- DTO(Data Transfer Object)
 
 It's a object that carries data between processes. The data is usually simple data like strings, ints, etc. It's used to pass data around layers of the project.
 
-Repository
+
+- Repository
 
 Do the aggregates persistensy (Cluster of domain objects like entities and value objects), separating the domain from the persistence layer.
 
-Strategy 
+
+- Strategy 
 
 Create behaviors that can be changed at runtime. It's a way to define a family of algorithms, encapsulate each one, and make them interchangeable.
 
-Dynamic Factory or Simple Factory
+
+- Dynamic Factory or Simple Factory
 
 Can create a object with a string
+
+
+- Presenter (TODO in Generate Invoice)
+
+Format and adapt a group of data to be presented to the client.
+
+
 

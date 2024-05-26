@@ -1,7 +1,7 @@
-﻿using InvoiceAppDomain.Data.DTOs;
+﻿using InvoiceApp.Handles;
+using InvoiceApp.Requests;
+using InvoiceApp.Responses;
 using InvoiceAppDomain.Data.Repository;
-using InvoiceAppDomain.Enums;
-using InvoiceAppDomain.Service.InvoiceServices;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,43 +22,14 @@ namespace InvoiceApp.Controllers
             _contractRepository = contractRepository;
         }
 
-        // GET: api/<InvoiceController>
-        [HttpGet]
-        public async Task<List<GenerateInvoicesOutputDTO>> Get()
-        {
-            var generateInvoices = new GenerateInvoices(_contractRepository);
-            var response = await generateInvoices.Execute(new GenerateInvoicesInputDTO
-            {
-                Month = 1,
-                Year = 2022,
-                Type = EnInvoiceType.Cash
-            });
-            return response;
-        }
-
-        // GET api/<InvoiceController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<InvoiceController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("GenerateInvoices")]
+        public async Task<GenerateInvoicesResponse> Post([FromBody] GenerateInvoicesRequest request)
         {
-        }
+            GenerateInvoicesHandle handler = new GenerateInvoicesHandle(_contractRepository);
+            GenerateInvoicesResponse response = await handler.Handle(request);
 
-        // PUT api/<InvoiceController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<InvoiceController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return response;
         }
     }
 }
