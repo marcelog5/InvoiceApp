@@ -6,3 +6,11 @@ Repository
 
 Do the aggregates persistensy (Cluster of domain objects like entities and value objects), separating the domain from the persistence layer.
 
+Strategy 
+
+Create behaviors that can be changed at runtime. It's a way to define a family of algorithms, encapsulate each one, and make them interchangeable.
+
+Dynamic Factory or Simple Factory
+
+Can create a object with a string
+

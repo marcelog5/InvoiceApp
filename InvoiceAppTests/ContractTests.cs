@@ -1,9 +1,6 @@
-﻿using InvoiceApp.Service.InvoiceServices;
-using InvoiceAppDomain.Data.DTOs;
-using InvoiceAppDomain.Data.Repository;
+﻿using InvoiceAppDomain.Data.DTOs;
 using InvoiceAppDomain.Entities;
 using InvoiceAppDomain.Enums;
-using Moq;
 
 namespace InvoiceAppTests
 {
@@ -11,7 +8,37 @@ namespace InvoiceAppTests
     public class ContractTests
     {
         [Fact]
-        public async Task MustGenerateInvoiceForAContract()
+        public void MustCalculateContractBalance()
+        {
+            // Arrange
+            Guid contractId = Guid.NewGuid();
+            var contractDummy = new Contract
+            {
+                Id = contractId,
+                Description = "Prestação de serviços escolares",
+                Amount = 6000,
+                Periods = 12,
+                Date = DateTime.Parse("2022-01-01T10:00:00"),
+                Payments = new List<Payment>
+                    {
+                        new Payment
+                        {
+                            ContractId = contractId,
+                            Amount = 2000,
+                            Date = DateTime.Parse("2022-01-05T10:00:00"),
+                        },
+                    },
+            };
+
+            // Act
+            var result = contractDummy.GetBalance();
+
+            // Assert
+            Assert.Equal(4000, result);
+        }
+
+        [Fact]
+        public void MustGenerateInvoiceForAContract()
         {
             // Arrange
             Guid contractId = Guid.NewGuid();

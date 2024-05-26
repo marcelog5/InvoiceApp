@@ -3,7 +3,7 @@ using InvoiceAppDomain.Data.Repository;
 using InvoiceAppDomain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvoiceApp.Service.InvoiceServices
+namespace InvoiceAppDomain.Service.InvoiceServices
 {
     public class GenerateInvoices
     {
@@ -27,9 +27,10 @@ namespace InvoiceApp.Service.InvoiceServices
             foreach (Contract contract in contracts)
             {
                 output.AddRange(contract.GenerateInvoices(input).
-                    Select(x => new GenerateInvoicesOutputDTO 
-                    { Amount = x.Amount, 
-                        Date = x.Date.ToString("yyyy-MM-dd") 
+                    Select(x => new GenerateInvoicesOutputDTO
+                    {
+                        Amount = x.Amount,
+                        Date = x.Date.ToString("yyyy-MM-dd")
                     }));
             }
 

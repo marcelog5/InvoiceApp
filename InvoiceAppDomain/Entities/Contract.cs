@@ -1,5 +1,5 @@
 ﻿using InvoiceAppDomain.Data.DTOs;
-using InvoiceAppDomain.Enums;
+using InvoiceAppDomain.Service.InvoiceServices;
 
 namespace InvoiceAppDomain.Entities
 {
@@ -13,51 +13,20 @@ namespace InvoiceAppDomain.Entities
 
         public virtual List<Payment> Payments { get; set; }
 
+        public double GetBalance()
+        {
+            double balance = Amount;
+            foreach (Payment payment in Payments)
+            {
+                balance -= payment.Amount;
+            }
+            return balance;
+        }
+
         public List<Invoice> GenerateInvoices(GenerateInvoicesInputDTO input)
         {
-            List<Invoice> invoices = new List<Invoice>();
-
-            if (input.Type == EnInvoiceType.Cash)
-            {
-                List<Payment> payments = Payments.Where(x => x.ContractId == Id).ToList();
-
-                foreach (Payment payment in payments)
-                {
-                    if (payment.Date.Month != input.Month || payment.Date.Year != input.Year)
-                    {
-                        continue;
-                    }
-
-                    invoices.Add(new Invoice
-                    {
-                        Date = payment.Date,
-                        Amount = payment.Amount
-                    });
-                }
-            }
-
-            if (input.Type == EnInvoiceType.Accrual)
-            {
-                int period = 0;
-                while (period <= Periods)
-                {
-                    DateTime date = Date.AddMonths(period++);
-
-                    if (date.Month != input.Month || date.Year != input.Year)
-                    {
-                        continue;
-                    }
-                    double amount = Amount / Periods;
-
-                    invoices.Add(new Invoice
-                    {
-                        Date = date,
-                        Amount = amount
-                    });
-                }
-            }
-
-            return invoices;
+            IInvoiceGenerationStrategy invoiceGenerationStrategy = new InvoiceGenerationFactory().Create(input.Type);
+            return invoiceGenerationStrategy.Generate(this, input.Month, input.Year);
         }
     }
 }

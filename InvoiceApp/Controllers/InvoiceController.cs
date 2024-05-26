@@ -1,7 +1,7 @@
-﻿using InvoiceApp.Service.InvoiceServices;
-using InvoiceAppDomain.Data.DTOs;
+﻿using InvoiceAppDomain.Data.DTOs;
 using InvoiceAppDomain.Data.Repository;
 using InvoiceAppDomain.Enums;
+using InvoiceAppDomain.Service.InvoiceServices;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
