@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceAppInfrastructure.Repository
 {
-    public abstract class EntityFrameworkRepository<TEntity, TIdType> : IRepository<TEntity, TIdType>
+    public class EntityFrameworkRepository<TEntity, TIdType> : IRepository<TEntity, TIdType>
         where TEntity : class
         where TIdType : struct
     {

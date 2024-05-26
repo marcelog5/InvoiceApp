@@ -7,10 +7,11 @@ using Moq;
 
 namespace InvoiceAppTests
 {
+    // Integration tests
     public class GenerateInvoiceTests
     {
         [Fact]
-        public async Task ShouldGenerateInvoiceCash()
+        public async Task MustGenerateInvoiceCash()
         {
             // Arrange
             Guid contractId = Guid.NewGuid();
@@ -57,7 +58,7 @@ namespace InvoiceAppTests
         }
 
         [Fact]
-        public async Task ShouldGenerateInvoiceAccrual()
+        public async Task MustGenerateInvoiceAccrual()
         {
             // Arrange
             Guid contractId = Guid.NewGuid();
