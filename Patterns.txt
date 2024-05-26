@@ -32,3 +32,8 @@ Add behavior to a object without changing the object itself. (OCP)
 
 Conects different layers of the project, passing data and returning responses.
 
+
+- Mediator
+
+Define an object that encapsulates how a set of objects interact. Promotes loose coupling between objects.
+
